@@ -17,6 +17,7 @@ cd gestion-des-depenses
 composer install
 yarn
 yarn build
+./reload.sh
 ```
 
 ##### 4. Modifier le fichier .htaccess et passwd
