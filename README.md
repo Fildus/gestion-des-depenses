@@ -21,4 +21,5 @@ yarn build
 
 ##### 4. Modifier le fichier .htaccess et passwd
 1- Remplacer le password via http://www.htaccesstools.com/htpasswd-generator/
+
 2- Modifer le chemin absolu.
