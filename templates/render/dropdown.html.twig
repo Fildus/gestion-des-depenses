@@ -1,0 +1,45 @@
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+       aria-haspopup="true" aria-expanded="false">
+        Année
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        {% for d in dates %}
+            <a class="dropdown-item" href="{{ path('show',{'year':d}) }}">{{ d }}</a>
+        {% endfor %}
+    </div>
+</li>
+{% if year != 0 %}
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+            Mois
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+            {% for i, m in [
+                'Janvier',
+                'Février',
+                'Mars',
+                'Avril',
+                'Mai',
+                'Juin',
+                'Juillet',
+                'Aout',
+                'Septembre',
+                'Octobre',
+                'Novembre',
+                'Décembre'
+            ] %}
+                <a class="dropdown-item
+                {% if (i+1) not in  availablesMonths %}
+                    text-muted
+                    {% else %}
+                    font-weight-bold
+                {% endif %}
+                " href="{{ path('show',{'year':year, 'month': i+1}) }}">
+                    {{ m }}
+                </a>
+            {% endfor %}
+        </div>
+    </li>
+{% endif %}

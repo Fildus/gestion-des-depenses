@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer une dépense{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Editer une dépense</h1>
+
+        {{ include('expenditure/_form.html.twig', {'button_label': 'Update'}) }}
+
+        <a href="{{ path('expenditure_index') }}">Retour à la liste</a>
+
+        {{ include('expenditure/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    {#    <a class="navbar-brand" href="{{ path('home') }}">Gestion des dépense</a>#}
+    <a href="{{ path('expenditure_new') }}">+</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            {% for nav in [
+                {name:'Dépenses', route: 'expenditure_index'}
+            ] %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path(nav.route) }}">{{ nav.name }}</a>
+                </li>
+            {% endfor %}
+            {{ render(controller('App\\Controller\\RenderController::dropdown', {
+                'month':app.request.attributes.get('month'),
+                'year':app.request.attributes.get('year'),
+                'page':app.request.attributes.get('page')
+            })) }}
+{#            <li>#}
+{#                <a class="nav-link" href="{{ path('uploads_index') }}">Uploads</a>#}
+{#            </li>#}
+        </ul>
+
+    </div>
+    <div class="text-center">
+        {% for i, m in ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Décembre'] %}
+            {% if (i+1) == app.request.attributes.get('month') %}
+                <span class="font-weight-bolder">{{ m }} {{ app.request.attributes.get('year') }}</span>
+            {% elseif app.request.attributes.get('month') == 0 and i >= 11 %}
+                <span class="font-weight-bolder">{{ app.request.attributes.get('year') }}</span>
+            {% endif %}
+        {% endfor %}
+    </div>
+</nav>

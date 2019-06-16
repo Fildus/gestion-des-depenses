@@ -1,0 +1,22 @@
+Descriptif de l’application:
+Application web simple permettant de gérer ses dépenses.
+
+Résultat attendu:
+    • Tableau
+        ◦ Intitulé
+        ◦ Société
+        ◦ Catégorie (Alimentation, etc…)
+        ◦ Type (Dépense journalière, mensuelle (abonnement), unique, etc …)
+        ◦ Compte source
+        ◦ Note additionnelle
+        ◦ Documents additionnels
+        ◦ Date
+        ◦ Heure
+Technologies :
+    • Framework Symfony 4.3
+    • php
+    • Mysql
+    • Orm doctrine
+    • Templating twig
+
+Ne comprend pas de mise en ligne du site

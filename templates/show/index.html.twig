@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dépenses{% endblock %}
+
+{% block body %}
+    <table class="table text-center">
+        <thead class="thead-dark">
+        <tr>
+            <th>Intitulé</th>
+            <th>Société</th>
+            <th>Catégorie</th>
+            <th>Type</th>
+            <th>Compte source</th>
+            <th>Date</th>
+            <th>Montant</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for e in expenditures %}
+            <tr>
+                <td>{{ e.title }}</td>
+                <td>{{ e.society }}</td>
+                <td>{{ e.category }}</td>
+                <td>{{ e.type }}</td>
+                <td>{{ e.sourceAccount }}</td>
+                <td>{{ e.date | date("d/m/Y") }}</td>
+                <td>{{ e.amount | number_format(2, ',', ' ') }} €</td>
+                <td>
+                    <a href="{{ path('expenditure_show', {'id': e.id}) }}">Voir</a>
+                    <a href="{{ path('expenditure_edit', {'id': e.id}) }}">Editer</a>
+                    {% include 'parts/expenditure/modal/copy/index.html.twig' with {'id':e.id} %}
+                    <form method="post" action="{{ path('expenditure_delete', {'id': e.id}) }}"
+                          onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ e.id) }}">
+                        <button class="btn">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <table class="table table-primary text-center">
+        <thead>
+        <tr>
+            <th>Montant total page</th>
+            <th>Montant total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ amountPage | number_format(2, ',', ' ') }} €</td>
+            <td>{{ amountTotal | number_format(2, ',', ' ') }} €</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('expenditure_new') }}">Nouvelle dépense</a>
+
+    <div class="pagination justify-content-center">
+        {{ knp_pagination_render(expenditures) }}
+    </div>
+{% endblock %}

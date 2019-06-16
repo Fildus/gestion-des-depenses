@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Index des dépenses{% endblock %}
+
+{% block body %}
+    <h1>Index des dépenses</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Intitulé</th>
+            <th>Société</th>
+            <th>Catégorie</th>
+            <th>Type</th>
+            <th>Compte source</th>
+            <th>Date</th>
+            <th>Montant</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for expenditure in expenditures %}
+            <tr>
+                <td>{{ expenditure.title }}</td>
+                <td>{{ expenditure.society }}</td>
+                <td>{{ expenditure.category }}</td>
+                <td>{{ expenditure.type }}</td>
+                <td>{{ expenditure.sourceAccount }}</td>
+                <td>{{ expenditure.date ? expenditure.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ expenditure.amount | number_format(2, ',', ' ') }} €</td>
+                <td>
+                    <a href="{{ path('expenditure_show', {'id': expenditure.id}) }}">Voir</a>
+                    <a href="{{ path('expenditure_edit', {'id': expenditure.id}) }}">Editer</a>
+                    {% include 'parts/expenditure/modal/copy/index.html.twig' with {'id': expenditure.id} %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">Aucune dépense enregistrée</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="pagination justify-content-center">
+        {{ knp_pagination_render(expenditures) }}
+    </div>
+{% endblock %}

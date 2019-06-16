@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Expenditure{% endblock %}
+
+{% block body %}
+    <div class="container">
+
+        <h1>Expenditure</h1>
+
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Intitulé</th>
+                <td>{{ expenditure.title }}</td>
+            </tr>
+            <tr>
+                <th>Société</th>
+                <td>{{ expenditure.society }}</td>
+            </tr>
+            <tr>
+                <th>Catégorie</th>
+                <td>{{ expenditure.category }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ expenditure.type }}</td>
+            </tr>
+            <tr>
+                <th>Compte source</th>
+                <td>{{ expenditure.sourceAccount }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ expenditure.note }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ expenditure.date ? expenditure.date|date('d-m-Y H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Montant</th>
+                <td>{{ expenditure.amount | number_format(2, ',', ' ') }} €</td>
+            </tr>
+        </table>
+
+        <a href="{{ path('expenditure_index') }}">retour à la liste</a>
+
+        <a href="{{ path('expenditure_edit', {'id': expenditure.id}) }}">Editer</a>
+
+        {% include 'parts/expenditure/modal/copy/index.html.twig' with {'id': expenditure.id} %}
+
+        {{ include('expenditure/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

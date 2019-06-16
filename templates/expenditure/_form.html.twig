@@ -1,0 +1,31 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+<button class="btn">Sauvergarder</button>
+{{ form_end(form) }}
+{% if expenditure.uploads is not empty %}
+    <hr>
+    <h2>Uploads</h2>
+    <table class="table table-primary text-center">
+        <tbody>
+        {% for u in expenditure.uploads %}
+            <tr>
+                <td>
+                    <a href="{{ asset('/uploads/'~u.filePath) }}">{{ u.fileName }}</a><br>
+                </td>
+                <td>
+                    <form method="post" action="{{ path('uploads_delete', {'id': u.id}) }}" onsubmit="return confirm('Êtes vous sûre de vouloir supprimer cet upload?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ u.id) }}">
+                        <button class="btn">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+{% if formUpload is defined %}
+    <div class="form-group">
+        {{ include('parts/uploads/modal/add/index.html.twig', {'id': expenditure.id}) }}
+    </div>
+{% endif %}
