@@ -4,7 +4,7 @@
 
 ##### 1. Télécharger le git vers le dossier de déstination
 ```bash
-git clone git@github.com:Fildus/gestion-des-depenses.git
+git clone https://github.com/Fildus/gestion-des-depenses.git
 ```
 ##### 2. Modifer les variables d'environement
 dans le ".env"
