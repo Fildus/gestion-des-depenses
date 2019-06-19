@@ -24,7 +24,7 @@ class ExpenditureController extends AbstractController
     public function index(ExpenditureRepository $expenditureRepository, PaginatorInterface $paginator, Request $request): Response
     {
         return $this->render('expenditure/index.html.twig', [
-            'expenditures' => $paginator->paginate($expenditureRepository->findAll(), $request->get('page'))
+            'expenditures' => $paginator->paginate($expenditureRepository->findAll(), $request->get('page') ?? 1)
         ]);
     }
 
