@@ -1,35 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}SourceAccount index{% endblock %}
+{% block title %}Index des dépenses{% endblock %}
 
 {% block body %}
-    <h1>SourceAccount index</h1>
+    <h1>Index des dépenses</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
+                <th>Nom</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for source_account in source_accounts %}
             <tr>
-                <td>{{ source_account.id }}</td>
                 <td>{{ source_account.name }}</td>
                 <td>
-                    <a href="{{ path('source_account_show', {'id': source_account.id}) }}">show</a>
-                    <a href="{{ path('source_account_edit', {'id': source_account.id}) }}">edit</a>
+                    <a href="{{ path('source_account_show', {'id': source_account.id}) }}">Voir</a>
+                    <a href="{{ path('source_account_edit', {'id': source_account.id}) }}">Editer</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Aucun résultat</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('source_account_new') }}">Create new</a>
+    <a href="{{ path('source_account_new') }}">Nouveau compte source</a>
 {% endblock %}

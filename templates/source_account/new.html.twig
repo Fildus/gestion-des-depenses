@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New SourceAccount{% endblock %}
+{% block title %}Création d'un nouveau compte source{% endblock %}
 
 {% block body %}
-    <h1>Create new SourceAccount</h1>
+    <h1>Création d'un nouveau compte source</h1>
 
     {{ include('source_account/_form.html.twig') }}
 
-    <a href="{{ path('source_account_index') }}">back to list</a>
+    <a href="{{ path('source_account_index') }}">Retour à la liste</a>
 {% endblock %}
