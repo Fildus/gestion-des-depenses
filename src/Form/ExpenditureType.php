@@ -3,9 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Expenditure;
-use App\Entity\Uploads;
+use App\Repository\SourceAccountRepository;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -15,6 +15,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ExpenditureType extends AbstractType
 {
+    /**
+     * @var SourceAccountRepository
+     */
+    private $sourceAccountRepository;
+
+    public function __construct(SourceAccountRepository $sourceAccountRepository)
+    {
+        $this->sourceAccountRepository = $sourceAccountRepository;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -30,8 +40,10 @@ class ExpenditureType extends AbstractType
             ->add('type', TextType::class, [
                 'label' => 'Type'
             ])
-            ->add('sourceAccount', TextType::class, [
-                'label' => 'Compte source'
+            ->add('sourceAccount', ChoiceType::class, [
+                'label' => 'Compte source',
+                'choices' => [$this->sourceAccountRepository->findAllByArray()],
+                'required' => true
             ])
             ->add('note', TextareaType::class, [
                 'label' => 'Note'

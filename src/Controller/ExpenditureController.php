@@ -7,11 +7,14 @@ use App\Entity\Uploads;
 use App\Form\ExpenditureType;
 use App\Form\UploadsType;
 use App\Repository\ExpenditureRepository;
+use App\Repository\SourceAccountRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Source;
 
 /**
  * @Route("/expenditure")
@@ -31,8 +34,11 @@ class ExpenditureController extends AbstractController
     /**
      * @Route("/new", name="expenditure_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, SourceAccountRepository $sourceAccountRepository): Response
     {
+        if (empty($sourceAccountRepository->findAll())){
+            return $this->redirectToRoute('source_account_new');
+        }
         $expenditure = new Expenditure();
         $form = $this->createForm(ExpenditureType::class, $expenditure);
         $form->handleRequest($request);
@@ -64,11 +70,14 @@ class ExpenditureController extends AbstractController
     }
 
     /**
-     * @todo redirect
      * @Route("/{id}/edit", name="expenditure_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Expenditure $expenditure): Response
+    public function edit(Request $request, Expenditure $expenditure, SourceAccountRepository $sourceAccountRepository): Response
     {
+        if (empty($sourceAccountRepository->findAll())){
+            return $this->redirectToRoute('source_account_new');
+        }
+
         $form = $this->createForm(ExpenditureType::class, $expenditure);
         $form->handleRequest($request);
 
@@ -82,8 +91,8 @@ class ExpenditureController extends AbstractController
         $upload = new Uploads();
         $formUpload = $this->createForm(UploadsType::class, $upload);
         $formUpload->handleRequest($request);
+        $upload->setExpenditure($expenditure);
         if ($formUpload->isSubmitted() && $formUpload->isValid()) {
-            $upload->setExpenditure($expenditure);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($upload);
             $entityManager->flush();
@@ -123,7 +132,7 @@ class ExpenditureController extends AbstractController
         if ($this->isCsrfTokenValid('copy' . $expenditure->getId(), $request->request->get('_token'))) {
             $expenditure = $expenditureRepository->find(key($request->request->get('date')));
 
-            $newExpenditure = $expenditure;
+            $newExpenditure = clone $expenditure;
 
             $newExpenditure->setDate(new \DateTime(array_values($request->request->get('date'))[0]));
 

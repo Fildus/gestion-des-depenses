@@ -41,11 +41,6 @@ class Expenditure
     private $type;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $sourceAccount;
-
-    /**
      * @ORM\Column(type="text")
      */
     private $note;
@@ -61,9 +56,14 @@ class Expenditure
     private $amount;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Uploads", mappedBy="expenditure")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Uploads", mappedBy="expenditure")
      */
     private $uploads;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\SourceAccount", inversedBy="expenditures")
+     */
+    private $sourceAccount;
 
     public function __construct()
     {
@@ -119,18 +119,6 @@ class Expenditure
     public function setType(string $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    public function getSourceAccount(): ?string
-    {
-        return $this->sourceAccount;
-    }
-
-    public function setSourceAccount(string $sourceAccount): self
-    {
-        $this->sourceAccount = $sourceAccount;
 
         return $this;
     }
@@ -198,6 +186,18 @@ class Expenditure
                 $upload->setExpenditure(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSourceAccount(): ?SourceAccount
+    {
+        return $this->sourceAccount;
+    }
+
+    public function setSourceAccount(?SourceAccount $sourceAccount): self
+    {
+        $this->sourceAccount = $sourceAccount;
 
         return $this;
     }

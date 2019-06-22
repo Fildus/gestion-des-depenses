@@ -9,7 +9,8 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             {% for nav in [
-                {name:'Dépenses', route: 'expenditure_index'}
+                {name:'Dépenses', route: 'expenditure_index'},
+                {name:'Comptes bancaires', route: 'source_account_index'}
             ] %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path(nav.route) }}">{{ nav.name }}</a>

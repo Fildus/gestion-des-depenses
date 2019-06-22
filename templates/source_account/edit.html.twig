@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit SourceAccount{% endblock %}
+
+{% block body %}
+    <h1>Edit SourceAccount</h1>
+
+    {{ include('source_account/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('source_account_index') }}">back to list</a>
+
+    {{ include('source_account/_delete_form.html.twig') }}
+{% endblock %}

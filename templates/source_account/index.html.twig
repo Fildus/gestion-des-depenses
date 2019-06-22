@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SourceAccount index{% endblock %}
+
+{% block body %}
+    <h1>SourceAccount index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for source_account in source_accounts %}
+            <tr>
+                <td>{{ source_account.id }}</td>
+                <td>{{ source_account.name }}</td>
+                <td>
+                    <a href="{{ path('source_account_show', {'id': source_account.id}) }}">show</a>
+                    <a href="{{ path('source_account_edit', {'id': source_account.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('source_account_new') }}">Create new</a>
+{% endblock %}

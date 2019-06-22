@@ -36,7 +36,7 @@ class Uploads
     private $filePath;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Expenditure", inversedBy="uploads")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Expenditure", inversedBy="uploads")
      */
     private $expenditure;
 
