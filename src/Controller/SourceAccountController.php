@@ -11,12 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/source/account")
+ * @Route("/account")
  */
 class SourceAccountController extends AbstractController
 {
     /**
-     * @Route("/", name="source_account_index", methods={"GET"})
+     * @Route("/index", name="source_account_index", methods={"GET"})
      */
     public function index(SourceAccountRepository $sourceAccountRepository): Response
     {
